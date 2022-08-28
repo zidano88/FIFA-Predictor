@@ -38,15 +38,25 @@ const GroupComponent = () => {
     const SelectedList = (props) => {
         return (
             <List>
-                {selectedData.map(({ name }) => {
+                {selectedData.map(({ name, flag, initials }) => {
                     return (
-                        <ListItem key={name}>{name}</ListItem>
+                        <Box key={name}>
+                            <ListItem>
+                                <Box sx={{ marginRight: "12px", fontWeight: "500", fontSize: "large", width: "10px" }}>{1 + selectedData.findIndex(obj => { return obj.initials === initials })}</Box>
+                                <Image src={flag} alt="flag" layout="fixed" width="30px" height="30px" />
+                                <Box marginLeft="10px">
+                                    {name}
+                                </Box>
+                            </ListItem>
+                            <Divider sx={{ backgroundColor: "#000000", height: "1px" }} />
+                        </Box>
                     )
                 })}
-
             </List>
         )
     };
+
+    {/* sx={{ backgroundColor: "red" }} */ }
 
     function populateArray(initials, index) {
         if (selectedData.some(function (el) {
