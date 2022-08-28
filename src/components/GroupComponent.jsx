@@ -1,6 +1,6 @@
 import React from "react";
 import Box from '@mui/material/Box';
-import { Button, Typography, Divider, List } from '@mui/material';
+import { Button, Typography, Divider, List, ListItem } from '@mui/material';
 // import Avatar from "@material-ui/core/Avatar";
 import Avatar from '@mui/material/Avatar';
 import Image from 'next/image';
@@ -28,6 +28,9 @@ const groupData = [
     },
 ];
 
+const selectedData = [
+
+];
 
 const GroupComponent = () => {
     return (
@@ -35,7 +38,7 @@ const GroupComponent = () => {
             <Typography variant="h5">GROUP A</Typography>
             <Divider sx={{ backgroundColor: "#000000", height: "2px" }} />
             <SelectionGroup />
-
+            <SelectedList />
         </Box>
     )
 };
@@ -45,7 +48,7 @@ const SelectionGroup = (props) => {
         <Box sx={{ margin: "11px 1px", display: "flex", flexDirection: "row", justifyContent: "space-between", }}>
             {groupData.map(({ initials, flag }) => {
                 return (
-                    <Button key={initials} variant="outlined" size="small" sx={{ margin: "5px", padding: "0" }} >
+                    <Button key={initials} onClick={() => populateArray(initials, groupData.findIndex(item => item.initials === initials))} variant="outlined" size="small" sx={{ margin: "5px", padding: "0" }} >
                         <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", margin: "4px 7px" }}>
                             <Image src={flag} alt="flag" layout="fixed" width="30px" height="30px" />
                             <Box marginLeft="7px">
@@ -55,6 +58,7 @@ const SelectionGroup = (props) => {
                     </Button>
                 )
             })}
+            {/* disabled */}
             {/* startIcon={<Avatar src={flag} variant="square" />} */}
             {/* <Button variant="outlined">m</Button>
             <Button variant="outlined">Q</Button>
@@ -62,6 +66,33 @@ const SelectionGroup = (props) => {
             <Button variant="outlined">z</Button> */}
         </Box>
     )
+};
+
+const SelectedList = () => {
+    return (
+        <List>
+            <ListItem>test</ListItem>
+            <ListItem>test1</ListItem>
+            <ListItem>test2</ListItem>
+        </List>
+    )
+};
+
+function populateArray(initials, index) {
+    if (selectedData.some(function (el) {
+        console.log("ini : " + initials)
+        return el.initials === initials;
+    })) {
+        const indexOfObj = selectedData.findIndex(obj => { return obj.initials === initials; });
+        console.log("index is : " + indexOfObj);
+        console.log("exists");
+        selectedData.splice(indexOfObj, 1);
+        console.log(selectedData);
+    } else {
+        console.log(index);
+        selectedData.push(groupData[index]);
+        console.log(selectedData);
+    }
 };
 
 export default GroupComponent;
